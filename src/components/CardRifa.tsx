@@ -9,7 +9,11 @@ import { useListarBoletosMutation, useListarBoletosQueryQuery } from '@/services
 const { PDFDocument, rgb } = require('pdf-lib');
 const QRCode = require('qrcode');
 
-function formatearFecha(fechaStr:string) {
+function esNumero(cadena: any) {
+  return !isNaN(cadena) && cadena.trim() !== "";
+}
+
+function formatearFecha(fechaStr: string) {
   // Descomponer la fecha en componentes
   const [year, month, day] = fechaStr.split('-').map(Number);
 
@@ -17,16 +21,16 @@ function formatearFecha(fechaStr:string) {
   const fecha = new Date(year, month - 1, day);
 
   // Opciones de formato
-  const opciones:any = {
-      weekday: 'long',  // nombre completo del día de la semana
-      day: 'numeric',   // día del mes
-      month: 'long',    // nombre completo del mes
-      year: 'numeric'   // año
+  const opciones: any = {
+    weekday: 'long',  // nombre completo del día de la semana
+    day: 'numeric',   // día del mes
+    month: 'long',    // nombre completo del mes
+    year: 'numeric'   // año
   };
 
   // Formateador de fechas
   const formateador = new Intl.DateTimeFormat('es-ES', opciones);
-  
+
   // Formatear y devolver la fecha
   return formateador.format(fecha);
 }
@@ -80,7 +84,7 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
   ctx.font = "bold 12px serif";
   ctx.fillText(formatearFecha(findRifa.fecha)?.toUpperCase(), 55, 29.5);
   ctx.font = "bold 18px serif";
-  ctx.fillText(findRifa.premio.toFixed(3), 230, 72.5);
+  ctx.fillText(esNumero(findRifa.premio) ? findRifa.premio.toFixed(3) : findRifa.premio, 230, 72.5);
 
   // dibujasmos la imagen
   ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -197,7 +201,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.font = "bold 12px serif";
       ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
       ctx.font = "bold 18px serif";
-      ctx.fillText(rifa.premio.toFixed(3), 230, 72.5);
+      ctx.fillText(esNumero(rifa.premio) ? rifa.premio.toFixed(3) : rifa.premio, 230, 72.5);
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -291,7 +295,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.font = "bold 12px serif";
       ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
       ctx.font = "bold 18px serif";
-      ctx.fillText(rifa.premio.toFixed(3), 230, 72.5);
+      ctx.fillText(esNumero(rifa.premio) ? rifa.premio.toFixed(3) : rifa.premio, 230, 72.5);
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -357,7 +361,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ]}
     >
       <Meta
-        title={`Premio : ${rifa?.premio.toFixed(3)}`}
+        title={`Premio : ${esNumero(rifa.premio) ? rifa.premio.toFixed(3) : rifa.premio}`}
       />
       <Meta description={`Fecha : ${rifa?.fecha}`} />
       <Meta description={`Nombre : ${rifa?.nombre}`} />
