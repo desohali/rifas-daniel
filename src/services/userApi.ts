@@ -109,6 +109,17 @@ export const userApi = createApi({
       },
       //transformResponse: (response: any, meta, arg) => response.data,
     }),
+    eliminarPremioBoleto: builder.mutation({
+      query: (variables) => {
+        return {
+          url: 'eliminarPremioBoleto',
+          method: 'post',
+          body: variables,
+          headers: { uid: "token" },
+        }
+      },
+      //transformResponse: (response: any, meta, arg) => response.data,
+    }),
     actualizarBoleto: builder.mutation({
       query: (variables) => {
         return {
@@ -215,6 +226,7 @@ export const {
   useListarBoletosPagadosMutation,
   usePagarBoletoMutation,
   useRegistrarUsuarioMutation,
+  useEliminarPremioBoletoMutation,
   useLoginValidadorQRMutation,
   useListarBoletosVendidosMutation,
   useListarBoletosQueryQuery,

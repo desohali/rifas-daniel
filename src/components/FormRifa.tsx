@@ -201,7 +201,6 @@ const FormRifa: React.FC<{ formRifa: any }> = ({ formRifa }) => {
               <Form.Item
                 name="premio"
                 label="Premio"
-                rules={[{ required: true, message: 'Por favor, ingrese premio' }]}
               >
                 <InputNumber placeholder="Premio" style={style} />
               </Form.Item>

@@ -9,6 +9,28 @@ import { useListarBoletosMutation, useListarBoletosQueryQuery } from '@/services
 const { PDFDocument, rgb } = require('pdf-lib');
 const QRCode = require('qrcode');
 
+function formatearFecha(fechaStr:string) {
+  // Descomponer la fecha en componentes
+  const [year, month, day] = fechaStr.split('-').map(Number);
+
+  // Crear una fecha con los componentes especificados
+  const fecha = new Date(year, month - 1, day);
+
+  // Opciones de formato
+  const opciones:any = {
+      weekday: 'long',  // nombre completo del día de la semana
+      day: 'numeric',   // día del mes
+      month: 'long',    // nombre completo del mes
+      year: 'numeric'   // año
+  };
+
+  // Formateador de fechas
+  const formateador = new Intl.DateTimeFormat('es-ES', opciones);
+  
+  // Formatear y devolver la fecha
+  return formateador.format(fecha);
+}
+
 const imageUrl = "https://yocreoquesipuedohacerlo.com/assets/images/juegoDeRifas/";
 
 var pdfDoc: any;
@@ -49,14 +71,15 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
 
   ctx.fillStyle = findRifa.color;//"black";
   // Dibuja la imagen wasap y facebook
-  ctx.drawImage(imgFW, 25, 25, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
+  ctx.drawImage(imgFW, 25, 35, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
 
   // comensasos a dijubar los textos
   ctx.font = "bold 18px serif";
-  ctx.fillText(findRifa.facebook, Math.ceil(imgFW.width / 4) + 30, 42.5);
-  ctx.fillText(findRifa.whatsapp, Math.ceil(imgFW.width / 4) + 30, 72.5);
-
-  ctx.fillText(findRifa.fecha.split("-").join("/"), 230, 42.5);
+  ctx.fillText(findRifa.facebook, Math.ceil(imgFW.width / 4) + 30, 52.5);
+  ctx.fillText(findRifa.whatsapp, Math.ceil(imgFW.width / 4) + 30, 82.5);
+  ctx.font = "bold 12px serif";
+  ctx.fillText(formatearFecha(findRifa.fecha)?.toUpperCase(), 55, 29.5);
+  ctx.font = "bold 18px serif";
   ctx.fillText(findRifa.premio.toFixed(3), 230, 72.5);
 
   // dibujasmos la imagen
@@ -165,14 +188,15 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
       ctx.fillStyle = rifa.color;//"black";
       // Dibuja la imagen wasap y facebook
-      ctx.drawImage(imgFW, 25, 25, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
+      ctx.drawImage(imgFW, 25, 35, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
 
       // comensasos a dijubar los textos
       ctx.font = "bold 18px serif";
-      ctx.fillText(rifa.facebook, Math.ceil(imgFW.width / 4) + 30, 42.5);
-      ctx.fillText(rifa.whatsapp, Math.ceil(imgFW.width / 4) + 30, 72.5);
-
-      ctx.fillText(rifa.fecha.split("-").join("/"), 230, 42.5);
+      ctx.fillText(rifa.facebook, Math.ceil(imgFW.width / 4) + 30, 52.5);
+      ctx.fillText(rifa.whatsapp, Math.ceil(imgFW.width / 4) + 30, 82.5);
+      ctx.font = "bold 12px serif";
+      ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
+      ctx.font = "bold 18px serif";
       ctx.fillText(rifa.premio.toFixed(3), 230, 72.5);
 
       // dibujasmos la imagen
@@ -258,14 +282,15 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
       ctx.fillStyle = rifa.color;//"black";
       // Dibuja la imagen wasap y facebook
-      ctx.drawImage(imgFW, 25, 25, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
+      ctx.drawImage(imgFW, 25, 35, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
 
       // comensasos a dijubar los textos
       ctx.font = "bold 18px serif";
-      ctx.fillText(rifa.facebook, Math.ceil(imgFW.width / 4) + 30, 42.5);
-      ctx.fillText(rifa.whatsapp, Math.ceil(imgFW.width / 4) + 30, 72.5);
-
-      ctx.fillText(rifa.fecha.split("-").join("/"), 230, 42.5);
+      ctx.fillText(rifa.facebook, Math.ceil(imgFW.width / 4) + 30, 52.5);
+      ctx.fillText(rifa.whatsapp, Math.ceil(imgFW.width / 4) + 30, 82.5);
+      ctx.font = "bold 12px serif";
+      ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
+      ctx.font = "bold 18px serif";
       ctx.fillText(rifa.premio.toFixed(3), 230, 72.5);
 
       // dibujasmos la imagen

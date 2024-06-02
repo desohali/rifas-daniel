@@ -3,9 +3,11 @@ import swal from 'sweetalert';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MinusCircleOutlined } from '@ant-design/icons';
-import { AutoComplete, Button, Drawer, Flex, Form, Input, List, Select, Space } from 'antd';
-import { useListarBoletosQueryQuery, useRegistrarPremioBoletosMutation } from '@/services/userApi';
+import { AutoComplete, Button, Drawer, Flex, Form, Input, List, Select, Space, Tooltip } from 'antd';
+import { useEliminarPremioBoletoMutation, useListarBoletosQueryQuery, useRegistrarPremioBoletosMutation } from '@/services/userApi';
 import { setListaDeBoletos, setListaDeBoletosConPremio, setOpenFormBoleto } from '@/features/adminSlice';
+import { DeleteOutlined } from '@ant-design/icons';
+
 
 const FormBoleto: React.FC = () => {
 
@@ -18,6 +20,8 @@ const FormBoleto: React.FC = () => {
     listaDeBoletos,
     listaDeBoletosConPremio
   } = useSelector((state: any) => state.admin);
+
+  const [eliminarPremioBoleto, { data: dataBoleto, error: errorBoleto, isLoading: isLoadingBoleto }] = useEliminarPremioBoletoMutation()
 
   const {
     data,
@@ -176,7 +180,20 @@ const FormBoleto: React.FC = () => {
         dataSource={listaDeBoletosConPremio}
         renderItem={(item: any) => {
           return (
-            <List.Item>
+            <List.Item key={item?._id} actions={[
+              <Tooltip title="Eliminar Premio">
+                <Button loading={isLoadingBoleto} danger type="primary" onClick={async () => {
+                  const res: any = await eliminarPremioBoleto({ _id: item?._id });
+                  console.log('res', res);
+                  if (res?.data?.status) {
+                    swal("", "Boleto eliminado correctamente!", "success");
+                    refetch();
+                  } else {
+                    swal("", res?.data?.error, "error");
+                  }
+                }} shape="circle" icon={<DeleteOutlined />} />
+              </Tooltip>
+            ]}>
               {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio == 9 ? "Sorpresa" : item.premio.toFixed(3)}`}
             </List.Item>
           )
