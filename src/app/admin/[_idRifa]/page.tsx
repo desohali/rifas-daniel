@@ -6,6 +6,9 @@ import { useBuscarBoletoMutation, useBuscarRifaMutation } from '@/services/userA
 import { Alert, Button, Col, Flex, Row, Spin, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 const { Title } = Typography;
+function esNumero(cadena: any) {
+  return !isNaN(cadena) && cadena.trim() !== "";
+}
 
 var canvas: any, ctx: any;
 var numerosInicio = [0, 0, 0, 0];
@@ -212,7 +215,7 @@ const page = ({ params }: any) => {
 
     ctx.drawImage(imagen, 0, 0);
     ctx.drawImage(imagenRifa, ((imagen?.width / 2) - (imagenRifa?.width / 2) - 75), 0, 450, 450);
-    
+
     nTimeout3 = setTimeout(() => {
       ctx.clearRect(400 + 250, 520, 125, 175);
       iniciarNumero3();
@@ -420,7 +423,7 @@ const page = ({ params }: any) => {
         <Col className="gutter-row" xs={24} sm={24} md={24} lg={24}>
           <Alert style={{ marginBottom: "12px" }} message={
             <Marquee pauseOnHover gradient={false}>
-              <Title style={{ marginBottom: "6px" }} level={3}>Juego De Rifas - premio {rifaDetalles?.premio?.toFixed(3)}</Title>
+              <Title style={{ marginBottom: "6px" }} level={3}>Juego De Rifas - premio {esNumero(rifaDetalles?.premio) ? rifaDetalles?.premio?.toFixed(3) : rifaDetalles?.premio}</Title>
             </Marquee>
           } type="info" showIcon />
         </Col>
