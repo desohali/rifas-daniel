@@ -54,7 +54,7 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
   // aqui se puede agregar el id del usuario administrador que nadie lo tiene
   const imageBase64 = await QRCode.toDataURL(`${window?.location?.origin}/juego/${element._id}`, {
     width: 90,
-    errorCorrectionLevel: 'L',
+    errorCorrectionLevel: 'H',
     type: 'png',
     rendererOpts: {
       quality: 1,

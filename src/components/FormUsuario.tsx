@@ -130,7 +130,7 @@ const FormUsuario: React.FC<{ formUsuario: any }> = ({ formUsuario }) => {
             </Col>
           </Row>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} sm={24} md={24} lg={12}>
               <Form.Item
                 name="_idRifa"
                 label="Rifa"
@@ -143,7 +143,7 @@ const FormUsuario: React.FC<{ formUsuario: any }> = ({ formUsuario }) => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={24} md={24} lg={12}>
               <Form.Item
                 name="descripcion"
                 label="Descripción"
