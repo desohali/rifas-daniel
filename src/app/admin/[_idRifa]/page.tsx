@@ -407,7 +407,7 @@ const page = ({ params }: any) => {
     ctx.fillStyle = rifaDetalles?.color || "white";
     ctx.fillRect(cordenadas.x - 25, CORDENADAY - 20, WIDTH, HEIGHT);
     ctx.fillStyle = "black";
-    const [, , numero] = rifaDetalles?.ganador.split("");
+    const [, , , numero] = rifaDetalles?.ganador.split("");
 
     const randoms = [
       Math.floor(Math.random() * 9),
