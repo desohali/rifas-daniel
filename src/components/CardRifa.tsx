@@ -53,12 +53,13 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
 
   // aqui se puede agregar el id del usuario administrador que nadie lo tiene
   const imageBase64 = await QRCode.toDataURL(`${window?.location?.origin}/juego/${element._id}`, {
-    width: 90,
+    width: 100,
     errorCorrectionLevel: 'H',
     type: 'png',
     rendererOpts: {
       quality: 1,
-    }
+    },
+    margin: 0
   });
 
   const img = await imagenLoaded(imageBase64);
@@ -73,7 +74,7 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
   ctx.fillStyle = "white";
   ctx.fillRect(15, 15, canvas.width - 30, canvas.height - 30);
 
-  ctx.fillStyle = findRifa.color;//"black";
+  ctx.fillStyle = "black";
   // Dibuja la imagen wasap y facebook
   ctx.drawImage(imgFW, 25, 35, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
 
@@ -88,22 +89,23 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
 
   // dibujasmos la imagen
   ctx.drawImage(imagen, 25, 100, 80, 80);
-  ctx.font = "bold 22px serif";
-  ctx.fillStyle = "white";
-  ctx.strokeStyle = findRifa.color; // Color del borde
-  ctx.lineWidth = 5; // Grosor del borde
+  ctx.font = "bold 34px serif";
+  // ctx.fillStyle = "white";
+  // ctx.strokeStyle = findRifa.color; // Color del borde
+  // ctx.lineWidth = 5; // Grosor del borde
 
   // Dibujar el texto con borde
-  ctx.strokeText(`1N° ${element.premioMayor}`, 120, 120);
-  ctx.fillText(`1N° ${element.premioMayor}`, 120, 120);
-  ctx.strokeText(`2N° ${element.premioMenor}`, 120, 150);
-  ctx.fillText(`2N° ${element.premioMenor}`, 120, 150);
+  //ctx.strokeText(`${element.premioMayor}`, 120, 120);
+  ctx.fillText(`${element.premioMayor}`, 120, 120);
+  //ctx.strokeText(`${element.premioMenor}`, 120, 150);
+  ctx.fillText(`${element.premioMenor}`, 120, 150);
   // suerte
   ctx.fillStyle = findRifa.color;//"black";
   ctx.font = "bold 18px serif";
-  ctx.fillText(`Valor: ${findRifa?.precio?.toFixed(3)}`, 117.5, 180);
+  ctx.fillStyle = "grey";
+  ctx.fillText(`₲: ${findRifa?.precio?.toFixed(3)}`, 120, 180);
 
-  ctx.drawImage(img, 225, 90, 90, 90);
+  ctx.drawImage(img, 210, 80, 100, 100);
 
 
   return pdfDoc.embedPng(canvas.toDataURL("image/png"));
@@ -190,7 +192,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.fillStyle = "white";
       ctx.fillRect(15, 15, canvas.width - 30, canvas.height - 30);
 
-      ctx.fillStyle = rifa.color;//"black";
+      ctx.fillStyle = "black";
       // Dibuja la imagen wasap y facebook
       ctx.drawImage(imgFW, 25, 35, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
 
@@ -205,23 +207,24 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
-      ctx.font = "bold 22px serif";
-      ctx.fillStyle = "white";
-      ctx.strokeStyle = rifa.color; // Color del borde
-      ctx.lineWidth = 5; // Grosor del borde
+      ctx.font = "bold 34px serif";
+      // ctx.fillStyle = "white";
+      // ctx.strokeStyle = rifa.color; // Color del borde
+      // ctx.lineWidth = 5; // Grosor del borde
 
       // numeros premiados
-      ctx.strokeText("1N° 0 0 0 0", 120, 120);
-      ctx.fillText("1N° 0 0 0 0", 120, 120);
-      ctx.strokeText("2N° 0 0 0 0", 120, 150);
-      ctx.fillText("2N° 0 0 0 0", 120, 150);
+      //ctx.strokeText("0000", 120, 120);
+      ctx.fillText("0000", 120, 120);
+      //ctx.strokeText("0000", 120, 150);
+      ctx.fillText("0000", 120, 150);
       // suerte
       ctx.fillStyle = rifa.color;//"black";
-      ctx.font = "bold 18px serif";
-      ctx.fillText(`Valor: ${rifa?.precio?.toFixed(3)}`, 117.5, 180);
-      // qr
       ctx.fillStyle = "grey";
-      ctx.fillRect(235, 100, 80, 80);
+      ctx.font = "bold 18px serif";
+      ctx.fillText(`₲: ${rifa?.precio?.toFixed(3)}`, 120, 180);
+      // qr
+      
+      ctx.fillRect(210, 80, 100, 100);
     })();
 
     const pdfBytes = await pdfDoc.save();
@@ -284,7 +287,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.fillStyle = "white";
       ctx.fillRect(15, 15, canvas.width - 30, canvas.height - 30);
 
-      ctx.fillStyle = rifa.color;//"black";
+      ctx.fillStyle = "black";
       // Dibuja la imagen wasap y facebook
       ctx.drawImage(imgFW, 25, 35, Math.ceil(imgFW.width / 4), Math.ceil(imgFW.height / 4));
 
@@ -299,23 +302,23 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
-      ctx.font = "bold 22px serif";
-      ctx.fillStyle = "white";
-      ctx.strokeStyle = rifa.color; // Color del borde
-      ctx.lineWidth = 5; // Grosor del borde
-
+      ctx.font = "bold 34px serif";
+      //ctx.fillStyle = "white";
+      //ctx.strokeStyle = "black"; // Color del borde
+      //ctx.lineWidth = 5; // Grosor del borde
+      
       // numeros premiados
-      ctx.strokeText("1N° 0 0 0 0", 120, 120);
-      ctx.fillText("1N° 0 0 0 0", 120, 120);
-      ctx.strokeText("2N° 0 0 0 0", 120, 150);
-      ctx.fillText("2N° 0 0 0 0", 120, 150);
+      //ctx.strokeText("0000", 120, 120);
+      ctx.fillText("0000", 120, 120);
+      //ctx.strokeText("0000", 120, 150);
+      ctx.fillText("0000", 120, 150);
       // suerte
-      ctx.fillStyle = rifa.color;//"black";
-      ctx.font = "bold 18px serif";
-      ctx.fillText(`Valor: ${rifa?.precio?.toFixed(3)}`, 117.5, 180);
-      // qr
       ctx.fillStyle = "grey";
-      ctx.fillRect(235, 100, 80, 80);
+      ctx.font = "bold 18px serif";
+      ctx.fillText(`₲: ${rifa?.precio?.toFixed(3)}`, 120, 180);
+      // qr
+      
+      ctx.fillRect(210, 80, 100, 100);
 
     })();
 
