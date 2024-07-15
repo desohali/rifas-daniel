@@ -7,7 +7,7 @@ import { Alert, Button, Col, Flex, Row, Spin, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 const { Title } = Typography;
 function esNumero(cadena: any) {
-  return !isNaN(cadena) && cadena.trim() !== "";
+  return !isNaN(cadena) && cadena?.trim() !== "";
 }
 
 var canvas: any, ctx: any;
