@@ -374,9 +374,9 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
           </Tooltip>
         </Col> */}
         <Col className="gutter-row" xs={24} sm={24} md={12} lg={12}>
-          <Tooltip title={`Boletos vendidos ${rifa.count}`}>
+          <Tooltip title={`${rifa.count} boletos vendidos`}>
             <Tag style={style} icon={<QrcodeOutlined />} color={rifa?.color}>
-              {`Boletos vendidos ${rifa.count}`}
+              {`${rifa.count} boletos vendidos`}
             </Tag>
           </Tooltip>
         </Col>
