@@ -1,13 +1,15 @@
 "use client";
 import React from 'react';
-import { EyeOutlined, EditOutlined, CloudDownloadOutlined } from '@ant-design/icons';
-import { Button, Card, Tooltip } from 'antd';
+import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Row, Tag, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
 import { setImagenRifa, setListaDeBoletos, setOpenFormBoleto, setOpenFormRifa, setRifaDetalles } from '@/features/adminSlice';
 import { useDispatch } from 'react-redux';
 import { useListarBoletosMutation, useListarBoletosQueryQuery } from '@/services/userApi';
 const { PDFDocument, rgb } = require('pdf-lib');
 const QRCode = require('qrcode');
+
+const style: any = { width: "100%", textAlign: "center" };
 
 function esNumero(cadena: any) {
   return !isNaN(cadena) && cadena?.trim() !== "" && cadena;
@@ -363,6 +365,22 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
         </Tooltip>,
       ]}
     >
+      <Row gutter={0} style={{ paddingBottom: "1rem" }}>
+        {/* <Col className="gutter-row" xs={14} sm={12} md={12} lg={12}>
+          <Tooltip title="Premios automáticos">
+            {rifa?.checked
+              ? <Tag style={style} icon={<QrcodeOutlined />} color="success">Activo</Tag>
+              : <Tag style={style} icon={<QrcodeOutlined />} color="default">Inactivo</Tag>}
+          </Tooltip>
+        </Col> */}
+        <Col className="gutter-row" xs={24} sm={24} md={12} lg={12}>
+          <Tooltip title={`Boletos vendidos ${rifa.count}`}>
+            <Tag style={style} icon={<QrcodeOutlined />} color={rifa?.color}>
+              {`Boletos vendidos ${rifa.count}`}
+            </Tag>
+          </Tooltip>
+        </Col>
+      </Row>
       <Meta
         title={`Premio : ${esNumero(rifa?.premio) ? rifa?.premio?.toFixed(3) : rifa?.premio || ""}`}
       />
