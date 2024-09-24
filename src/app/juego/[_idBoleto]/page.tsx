@@ -1,10 +1,11 @@
 "use client";
 import { setRifaDetalles } from '@/features/adminSlice';
-import { useActualizarBoletoMutation, useBuscarBoletoMutation } from '@/services/userApi';
+import { useActualizarBoletoMutation, useBuscarBoletoMutation, useLoginValidadorQRMutation } from '@/services/userApi';
 import { Col, Row } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 var canvas: any, ctx: any, imagen: any;
 var width = 642, height = 1280;
@@ -28,8 +29,10 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
   const dispatch = useDispatch();
   const { rifaDetalles: boletoDetalles } = useSelector((state: any) => state.admin);
 
+  const [autenticarUsuario, { data, error, isLoading }] = useLoginValidadorQRMutation();
 
-  const [buscarRifa, { data, error, isLoading }] = useBuscarBoletoMutation();
+
+  const [buscarRifa, responseRifa] = useBuscarBoletoMutation();
   const [actualizarBoleto, { data: dataBoleto }] = useActualizarBoletoMutation();
 
   React.useEffect(() => {
@@ -42,6 +45,7 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
   const videoRef = React.useRef<any>(null);
   React.useEffect(() => {
     canvas = document.querySelector("canvas");
+    localStorage.removeItem("usuarioLuis");
   }, []);
   const [urlAudio, setUrlAudio] = React.useState("");
 
@@ -98,19 +102,61 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
         y <= rectY + rectHeight
       ) {
 
+        canvas.removeEventListener('click', listenerClick);
 
         // Obtener el valor de un parámetro específico
         const params = new URLSearchParams(document.location.search);
-        const [_idUsuario, latitude, longitude] = [
+        let [_idUsuario, latitude, longitude]: any = [
           (params.get('user') || ''),
           (params.get('latitude') || ''),
           (params.get('longitude') || '')
         ];
 
-        if (!_idUsuario) {
-          swal("Alerta", "Usuario no autorizado!", "info");
-          return;
+        if (!_idUsuario && !localStorage.getItem("vendedor")) {
+          const result = await Swal.fire({
+            title: 'Usuario no autenticado!',
+            html:
+              '<input id="swal-input1" class="swal2-input" placeholder="Usuario" type="text" autocomplete="off">' +
+              '<input id="swal-input2" class="swal2-input" placeholder="Contraseña" type="password" autocomplete="off">',
+            focusConfirm: false,
+            preConfirm: () => {
+              const username: any = document.getElementById('swal-input1');
+              const password: any = document.getElementById('swal-input2');
+
+              if (!username?.value || !password?.value) {
+                Swal.showValidationMessage('Ingrese usuario y contraseña');
+              }
+
+              return { username: username?.value, password: password?.value };
+            }
+          });
+
+          if (result.isConfirmed) {
+            const { username, password } = result.value;
+            const { data }: any = await autenticarUsuario({
+              usuario: (username || "")?.trim(),
+              password: (password || "")?.trim()
+            });
+
+            if (!data || data?.tipoUsuario != "v") {
+              swal("Alerta", "Usuario no autorizado!", "warning");
+              return;
+            } else {
+              localStorage.setItem("vendedor", data._id);
+              _idUsuario = data._id;
+              latitude = -12.0464;
+              longitude = -77.0428;
+            }
+
+          }
+
+
+        } else if (!_idUsuario && localStorage.getItem("vendedor")) {
+          _idUsuario = localStorage.getItem("vendedor");
+          latitude = -12.0464;
+          longitude = -77.0428;
         }
+
         if (!latitude || !longitude) {
           swal("Alerta", "Datos de ubicación incompletos!", "info");
           return;
@@ -146,7 +192,7 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
           }
           setIsPlaying(!isPlaying);
 
-          canvas.removeEventListener('click', listenerClick);
+        
 
         }
 
