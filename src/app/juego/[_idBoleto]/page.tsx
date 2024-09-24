@@ -116,8 +116,8 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
           const result = await Swal.fire({
             title: 'Usuario no autenticado!',
             html:
-              '<input id="swal-input1" class="swal2-input" placeholder="Usuario" type="text" autocomplete="off">' +
-              '<input id="swal-input2" class="swal2-input" placeholder="Contraseña" type="password" autocomplete="off">',
+              '<input id="swal-input1" class="swal2-input"style="width: 100%; margin-left:0px; margin-right:0px" placeholder="Usuario" type="text" autocomplete="off">' +
+              '<input id="swal-input2" class="swal2-input"style="width: 100%; margin-left:0px; margin-right:0px" placeholder="Contraseña" type="password" autocomplete="off">',
             focusConfirm: false,
             preConfirm: () => {
               const username: any = document.getElementById('swal-input1');
