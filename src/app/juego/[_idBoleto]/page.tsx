@@ -1,7 +1,7 @@
 "use client";
 import { setRifaDetalles } from '@/features/adminSlice';
 import { useActualizarBoletoMutation, useBuscarBoletoMutation, useLoginValidadorQRMutation } from '@/services/userApi';
-import { Col, Row } from 'antd';
+import { Button, Col, Drawer, Flex, Form, Input, Row, Tag } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
@@ -11,6 +11,14 @@ var canvas: any, ctx: any, imagen: any;
 var width = 642, height = 1280;
 
 const imageUrl = "https://yocreoquesipuedohacerlo.com/assets/images/juegoDeRifas/";
+
+const customizeRequiredMark = (label: React.ReactNode, { required }: { required: boolean }) => (
+  <>
+    {required ? <Tag color="error">Required</Tag> : <Tag color="warning">optional</Tag>}
+    {label}
+  </>
+);
+const style: React.CSSProperties = { width: '100%' };
 
 
 ////////////////////////////////////////////////////////////////////
@@ -27,8 +35,10 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
 
 
   const dispatch = useDispatch();
+  const [formUsuario] = Form.useForm();
   const { rifaDetalles: boletoDetalles } = useSelector((state: any) => state.admin);
 
+  const [openDrawer, setopenDrawer] = React.useState(false);
   const [autenticarUsuario, { data, error, isLoading }] = useLoginValidadorQRMutation();
 
 
@@ -113,44 +123,8 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
         ];
 
         if (!_idUsuario && !localStorage.getItem("vendedor")) {
-          const result = await Swal.fire({
-            title: 'Usuario no autenticado!',
-            html:
-              '<input id="swal-input1" class="swal2-input"style="width: 100%; margin-left:0px; margin-right:0px" placeholder="Usuario" type="text" autocomplete="off">' +
-              '<input id="swal-input2" class="swal2-input"style="width: 100%; margin-left:0px; margin-right:0px" placeholder="Contraseña" type="password" autocomplete="off">',
-            focusConfirm: false,
-            preConfirm: () => {
-              const username: any = document.getElementById('swal-input1');
-              const password: any = document.getElementById('swal-input2');
-
-              if (!username?.value || !password?.value) {
-                Swal.showValidationMessage('Ingrese usuario y contraseña');
-              }
-
-              return { username: username?.value, password: password?.value };
-            }
-          });
-
-          if (result.isConfirmed) {
-            const { username, password } = result.value;
-            const { data }: any = await autenticarUsuario({
-              usuario: (username || "")?.trim(),
-              password: (password || "")?.trim()
-            });
-
-            if (!data || data?.tipoUsuario != "v") {
-              swal("Alerta", "Usuario no autorizado!", "warning");
-              return;
-            } else {
-              localStorage.setItem("vendedor", data._id);
-              _idUsuario = data._id;
-              latitude = -12.0464;
-              longitude = -77.0428;
-            }
-
-          }
-
-
+          setopenDrawer(true);
+          return;
         } else if (!_idUsuario && localStorage.getItem("vendedor")) {
           _idUsuario = localStorage.getItem("vendedor");
           latitude = -12.0464;
@@ -192,7 +166,7 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
           }
           setIsPlaying(!isPlaying);
 
-        
+
 
         }
 
@@ -286,7 +260,75 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
 
         </Col>
         <Col className="gutter-row" xs={24} sm={4} md={6} lg={8}>
+          <Drawer
+            title="Autenticar usuario"
+            width={500}
+            onClose={() => setopenDrawer(false)}
+            open={openDrawer}
+            styles={{
+              body: {
+                paddingBottom: 80,
+              },
+            }}>
+            <Form
+              form={formUsuario}
+              name="login-form"
+              layout="vertical"
+              style={{ width: "100%" }}
+              requiredMark={customizeRequiredMark}
+              initialValues={{
+                usuario: "",
+                password: "",
+              }}
+              onFinish={async (values) => {
+                const { usuario, password } = values;
+                const { data }: any = await autenticarUsuario({
+                  usuario: (usuario || "")?.trim(),
+                  password: (password || "")?.trim()
+                });
 
+                if (!data || data?.tipoUsuario != "v") {
+                  swal("Alerta", "Usuario no autorizado!", "warning");
+                  return;
+                } else {
+                  localStorage.setItem("vendedor", data._id);
+                }
+                location.reload();
+
+              }} >
+              <Row gutter={16}>
+                <Col xs={24} sm={24} md={12} lg={12}>
+                  <Form.Item
+                    name="usuario"
+                    label="Usuario"
+                    rules={[{ required: true, message: 'Por favor, ingrese usuario' }]}
+                  >
+                    <Input placeholder="Usuario" style={style} />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={24} md={12} lg={12}>
+                  <Form.Item
+                    name="password"
+                    label="Contraseña"
+                    rules={[{ required: true, message: 'Por favor, ingrese contraseña' }]}
+                  >
+                    <Input type='password' placeholder="Usuario" style={style} />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={24}>
+                  <Flex vertical gap="small" style={{ width: '50%', margin: "auto" }}>
+                    <Button loading={isLoading} type="primary" block htmlType="submit">
+                      Autenticar
+                    </Button>
+                  </Flex>
+                </Col>
+              </Row>
+
+            </Form>
+          </Drawer>
         </Col>
       </Row>
     </React.Suspense>

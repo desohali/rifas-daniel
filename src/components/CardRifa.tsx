@@ -365,14 +365,14 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
         </Tooltip>,
       ]}
     >
-      <Row gutter={0} style={{ paddingBottom: "1rem" }}>
-        {/* <Col className="gutter-row" xs={14} sm={12} md={12} lg={12}>
+      <Row gutter={12} style={{ paddingBottom: "1rem" }}>
+        <Col className="gutter-row" xs={24} sm={24} md={12} lg={12}>
           <Tooltip title="Premios automáticos">
             {rifa?.checked
               ? <Tag style={style} icon={<QrcodeOutlined />} color="success">Activo</Tag>
               : <Tag style={style} icon={<QrcodeOutlined />} color="default">Inactivo</Tag>}
           </Tooltip>
-        </Col> */}
+        </Col>
         <Col className="gutter-row" xs={24} sm={24} md={12} lg={12}>
           <Tooltip title={`${rifa.count} boletos vendidos`}>
             <Tag style={style} icon={<QrcodeOutlined />} color={rifa?.color}>
