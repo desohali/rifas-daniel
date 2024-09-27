@@ -141,7 +141,7 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
           ctx.drawImage(imagen, 0, 0);
 
           if (data?.data?.premio) {
-            videoRef1.current.pause();
+            videoRef1.current.play();
           } else {
             videoRef2.current.play();
           }
