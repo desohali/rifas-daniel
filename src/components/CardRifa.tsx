@@ -331,8 +331,11 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
   return (
     <Card
-      onClick={() => {
-        router.push(`./${rifa._id}`);
+      onClick={(event: any) => {
+        // Verifica si el elemento clicado es un <canvas>
+        if (event.target.tagName.toLowerCase() === 'canvas') {
+          router.push(`./${rifa._id}`);
+        }
       }}
       hoverable
       style={{ width: "100%" }}

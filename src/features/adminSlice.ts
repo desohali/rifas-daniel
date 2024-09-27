@@ -11,6 +11,7 @@ const initialState: any = {
   listaDeBoletos: [],
   listaDeBoletosConPremio: [],
   listaDeBoletosADevolver: [],
+  listaDeBoletosConPremioRandom: [],
   // imagen de rifa
   imagenRifa: undefined
 };
@@ -50,6 +51,9 @@ export const adminSlice = createSlice({
     setImagenRifa: (state, action) => {
       state.imagenRifa = action.payload;
     },
+    setListaDeBoletosConPremioRandom: (state, action) => {
+      state.listaDeBoletosConPremioRandom = action.payload;
+    },
   },
 });
 
@@ -64,7 +68,8 @@ export const {
   setListaDeBoletos,
   setListaDeBoletosConPremio,
   setListaDeBoletosADevolver,
-  setImagenRifa
+  setImagenRifa,
+  setListaDeBoletosConPremioRandom
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

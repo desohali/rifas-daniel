@@ -52,37 +52,17 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
       });
   }, []);
 
-  const videoRef = React.useRef<any>(null);
+  const videoRef1 = React.useRef<any>(null);
+  const videoRef2 = React.useRef<any>(null);
+
   React.useEffect(() => {
     canvas = document.querySelector("canvas");
     localStorage.removeItem("usuarioLuis");
   }, []);
-  const [urlAudio, setUrlAudio] = React.useState("");
 
-  React.useEffect(() => {
 
-    if (boletoDetalles) {
-
-      if (boletoDetalles?.estadoMenor) {
-
-        const videoName = boletoDetalles?.premio
-          ? `premio${boletoDetalles?.premio.toString()}`
-          : 'sigueIntentando';
-
-        const img = new Image();
-        img.src = `../../../imagenes/${videoName}.PNG`;
-
-        if (boletoDetalles?.premio >= 600000) {
-          setUrlAudio(`../../../imagenes/premioMayor.mp3`);
-        } else if (boletoDetalles?.premio < 600000 && boletoDetalles?.premio > 0) {
-          setUrlAudio(`../../../imagenes/premioMenor.mp3`);
-        } else {
-          setUrlAudio(`../../../imagenes/sigueIntentando.mp3`);
-        }
-
-      }
-    }
-  }, [boletoDetalles]);
+  const [urlAudioPremio, setUrlAudioPremio] = React.useState("../../../imagenes/premioMenor.mp3");
+  const [urlAudioNoPremio, setUrlAudioNoPremio] = React.useState("../../../imagenes/sigueIntentando.mp3");
 
 
   const [isPlaying, setIsPlaying] = React.useState(false);
@@ -159,14 +139,12 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
           canvas.width = imagen.width;
           canvas.height = imagen.height;
           ctx.drawImage(imagen, 0, 0);
-          if (isPlaying) {
-            videoRef.current.pause();
+
+          if (data?.data?.premio) {
+            videoRef1.current.pause();
           } else {
-            videoRef.current.play();
+            videoRef2.current.play();
           }
-          setIsPlaying(!isPlaying);
-
-
 
         }
 
@@ -256,7 +234,8 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
 
           <canvas width={628} height={1280} ></canvas>
 
-          <audio ref={videoRef} src={urlAudio} />
+          <audio ref={videoRef1} src={urlAudioPremio} />
+          <audio ref={videoRef2} src={urlAudioNoPremio} />
 
         </Col>
         <Col className="gutter-row" xs={24} sm={4} md={6} lg={8}>
