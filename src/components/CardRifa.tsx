@@ -1,11 +1,12 @@
 "use client";
 import React from 'react';
-import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined,DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row, Tag, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
-import { setImagenRifa, setListaDeBoletos, setOpenFormBoleto, setOpenFormRifa, setRifaDetalles } from '@/features/adminSlice';
+import { setImagenRifa, setIsRifa, setListaDeBoletos, setOpenFormBoleto, setOpenFormRifa, setRifaDetalles } from '@/features/adminSlice';
 import { useDispatch } from 'react-redux';
-import { useListarBoletosMutation, useListarBoletosQueryQuery } from '@/services/userApi';
+import { useEliminarRifaMutation, useListarBoletosMutation, useListarBoletosQueryQuery } from '@/services/userApi';
+import Swal from 'sweetalert2';
 const { PDFDocument, rgb } = require('pdf-lib');
 const QRCode = require('qrcode');
 
@@ -256,6 +257,8 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
     isLoading
   }] = useListarBoletosMutation();
 
+  const [eliminarRifa, responseEliminar] = useEliminarRifaMutation();
+
   React.useEffect(() => {
 
     (async () => {
@@ -342,7 +345,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       cover={<canvas id={rifa._id} height={213} width={341} style={{ borderRadius: ".5rem .5rem 0 0" }}></canvas>}
       actions={[
         <Tooltip title="Editar">
-          <Button type="primary" onClick={(e) => {
+          <Button size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" onClick={(e) => {
             e.stopPropagation();
             dispatch(setOpenFormRifa(true));
             formRifa.resetFields();
@@ -350,7 +353,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
           }} shape="circle" icon={<EditOutlined />} />
         </Tooltip>,
         <Tooltip title="Descargar">
-          <Button loading={loading} type="primary" onClick={async (e) => {
+          <Button size={window?.innerWidth > 768 ? 'middle' : 'small'} loading={loading} type="primary" onClick={async (e) => {
             e.stopPropagation();
             setloading(true);
             const { data = [] }: any = await listarBoletos({ _idRifa: rifa._id });
@@ -360,12 +363,50 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
           }} shape="circle" icon={<CloudDownloadOutlined />} />
         </Tooltip>,
         <Tooltip title="2N° ganadores">
-          <Button type="primary" onClick={async (e) => {
+          <Button size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" onClick={async (e) => {
             e.stopPropagation();
             dispatch(setOpenFormBoleto(true));
             dispatch(setRifaDetalles(rifa));
           }} shape="circle" icon={<EyeOutlined />} />
         </Tooltip>,
+        <Tooltip title="Eliminar">
+        <Button loading={responseEliminar.isLoading} size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" danger onClick={async (e) => {
+          e.stopPropagation();
+          const { isConfirmed, value } = await Swal.fire({
+            icon: "question",
+            input: "text",
+            title: "Seguro que deseas eliminar esta rifa ?",
+            text: "Ingresa el PIN de seguridad",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Si",
+            denyButtonText: "No",
+            inputValidator: (value) => {
+              if (!/[0-9]{4}/.test(value)) {
+                return "Ingresa el PIN de seguridad!";
+              }
+            }
+          });
+
+          if (isConfirmed) {
+            if (value == 1991) {
+              await eliminarRifa({ _idRifa: rifa._id });
+
+              dispatch(setIsRifa(true));
+              setTimeout(() => { dispatch(setIsRifa(false)) }, 50);
+            } else {
+              Swal.fire({
+                title: "PIN incorrecto!",
+                text: "",
+                icon: "info"
+              });
+            }
+
+          }
+          /* dispatch(setOpenFormBoleto(true));
+          dispatch(setRifaDetalles(rifa)); */
+        }} shape="circle" icon={<DeleteOutlined />} />
+      </Tooltip>,
       ]}
     >
       <Row gutter={12} style={{ paddingBottom: "1rem" }}>

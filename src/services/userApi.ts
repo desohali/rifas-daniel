@@ -20,6 +20,17 @@ export const userApi = createApi({
       },
       //transformResponse: (response: any, meta, arg) => response.data,
     }),
+    eliminarRifa: builder.mutation({
+      query: (variables) => {
+        return {
+          url: 'eliminarRifa',
+          method: 'post',
+          body: variables,
+          headers: { uid: "token" },
+        }
+      },
+      //transformResponse: (response: any, meta, arg) => response.data,
+    }),
     listarRifas: builder.mutation({
       query: (variables) => {
         return {
@@ -231,5 +242,6 @@ export const {
   useListarBoletosVendidosMutation,
   useListarBoletosQueryQuery,
   useBoletosDevueltosMutation,
-  useActualizarBoletosDevueltosMutation
+  useActualizarBoletosDevueltosMutation,
+  useEliminarRifaMutation
 } = userApi;
