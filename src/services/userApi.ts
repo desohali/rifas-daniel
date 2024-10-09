@@ -175,6 +175,17 @@ export const userApi = createApi({
       },
       //transformResponse: (response: any, meta, arg) => response.data,
     }),
+    actualizarRifaUsuarios: builder.mutation({
+      query: (variables) => {
+        return {
+          url: 'actualizarRifaUsuarios',
+          method: 'post',
+          body: variables,
+          headers: { uid: "token" },
+        }
+      },
+      //transformResponse: (response: any, meta, arg) => response.data,
+    }),
     loginValidadorQR: builder.mutation({
       query: (variables) => {
         return {
@@ -243,5 +254,6 @@ export const {
   useListarBoletosQueryQuery,
   useBoletosDevueltosMutation,
   useActualizarBoletosDevueltosMutation,
-  useEliminarRifaMutation
+  useEliminarRifaMutation,
+  useActualizarRifaUsuariosMutation
 } = userApi;

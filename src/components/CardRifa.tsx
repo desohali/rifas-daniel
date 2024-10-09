@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined,DeleteOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row, Tag, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
 import { setImagenRifa, setIsRifa, setListaDeBoletos, setOpenFormBoleto, setOpenFormRifa, setRifaDetalles } from '@/features/adminSlice';
@@ -370,43 +370,43 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
           }} shape="circle" icon={<EyeOutlined />} />
         </Tooltip>,
         <Tooltip title="Eliminar">
-        <Button loading={responseEliminar.isLoading} size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" danger onClick={async (e) => {
-          e.stopPropagation();
-          const { isConfirmed, value } = await Swal.fire({
-            icon: "question",
-            input: "text",
-            title: "Seguro que deseas eliminar esta rifa ?",
-            text: "Ingresa el PIN de seguridad",
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-            inputValidator: (value) => {
-              if (!/[0-9]{4}/.test(value)) {
-                return "Ingresa el PIN de seguridad!";
+          <Button loading={responseEliminar.isLoading} size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" danger onClick={async (e) => {
+            e.stopPropagation();
+            const { isConfirmed, value } = await Swal.fire({
+              icon: "question",
+              input: "text",
+              title: "Seguro que deseas eliminar esta rifa ?",
+              text: "Ingresa el PIN de seguridad",
+              showDenyButton: true,
+              showCancelButton: false,
+              confirmButtonText: "Si",
+              denyButtonText: "No",
+              inputValidator: (value) => {
+                if (!/[0-9]{4}/.test(value)) {
+                  return "Ingresa el PIN de seguridad!";
+                }
               }
+            });
+
+            if (isConfirmed) {
+              if (value == 1991) {
+                await eliminarRifa({ _idRifa: rifa._id });
+
+                dispatch(setIsRifa(true));
+                setTimeout(() => { dispatch(setIsRifa(false)) }, 50);
+              } else {
+                Swal.fire({
+                  title: "PIN incorrecto!",
+                  text: "",
+                  icon: "info"
+                });
+              }
+
             }
-          });
-
-          if (isConfirmed) {
-            if (value == 1991) {
-              await eliminarRifa({ _idRifa: rifa._id });
-
-              dispatch(setIsRifa(true));
-              setTimeout(() => { dispatch(setIsRifa(false)) }, 50);
-            } else {
-              Swal.fire({
-                title: "PIN incorrecto!",
-                text: "",
-                icon: "info"
-              });
-            }
-
-          }
-          /* dispatch(setOpenFormBoleto(true));
-          dispatch(setRifaDetalles(rifa)); */
-        }} shape="circle" icon={<DeleteOutlined />} />
-      </Tooltip>,
+            /* dispatch(setOpenFormBoleto(true));
+            dispatch(setRifaDetalles(rifa)); */
+          }} shape="circle" icon={<DeleteOutlined />} />
+        </Tooltip>,
       ]}
     >
       <Row gutter={12} style={{ paddingBottom: "1rem" }}>
@@ -424,13 +424,14 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
             </Tag>
           </Tooltip>
         </Col>
+
       </Row>
       <Meta
         title={`Premio : ${esNumero(rifa?.premio) ? rifa?.premio?.toFixed(3) : rifa?.premio || ""}`}
       />
       <Meta description={`Fecha : ${rifa?.fecha}`} />
       <Meta description={`Nombre : ${rifa?.nombre}`} />
-      <Meta description={rifa?.descripcion} />
+      <Meta description={`Total: ${((Number(rifa.precio) * 1000) * Number(rifa.count)).toLocaleString()}`} />
     </Card>
   )
 };
