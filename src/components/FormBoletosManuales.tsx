@@ -175,7 +175,12 @@ const FormBoletosManuales: React.FC = () => {
       <List
         style={{ maxHeight: "300px", overflowY: "auto" }}
         size="small"
-        header={<div>{`Lista de 2N° ganadores : ${listaDeBoletosConPremio.length}`}</div>}
+        header={<div>
+          <p>{`Lista de 2N° ganadores : ${listaDeBoletosConPremio.length}`}</p>
+          <p>{`Total : ${listaDeBoletosConPremio.reduce((a: any, cv: any) => {
+            return (a + cv.premio)
+          }, 0).toLocaleString()}`}</p>
+        </div>}
         bordered
         dataSource={listaDeBoletosConPremio}
         renderItem={(item: any) => {
