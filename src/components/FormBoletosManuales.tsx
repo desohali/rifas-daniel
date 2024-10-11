@@ -92,7 +92,7 @@ const FormBoletosManuales: React.FC = () => {
             setValue("");
           }
         }}
-        placeholder="Buscar 2N° ganadores"
+        placeholder="Buscar ganadores QR manuales"
         filterOption={(inputValue, option: any) => {
           return option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
         }}
@@ -175,12 +175,15 @@ const FormBoletosManuales: React.FC = () => {
       <List
         style={{ maxHeight: "300px", overflowY: "auto" }}
         size="small"
-        header={<div>
-          <p>{`Lista de 2N° ganadores : ${listaDeBoletosConPremio.length}`}</p>
-          <p>{`Total : ${listaDeBoletosConPremio.reduce((a: any, cv: any) => {
-            return (a + cv.premio)
-          }, 0).toLocaleString()}`}</p>
-        </div>}
+        header={(
+          <div>
+            <p>{`Lista de ganadores QR manuales : ${listaDeBoletosConPremio.length}`}</p>
+            <p>{`Total : ${listaDeBoletosConPremio.reduce((a: any, cv: any) => {
+              return (a + cv.premio)
+            }, 0).toLocaleString()}`}
+            </p>
+          </div>
+        )}
         bordered
         dataSource={listaDeBoletosConPremio}
         renderItem={(item: any) => {

@@ -173,12 +173,14 @@ const FormBoletosAutomaticos = () => {
           <List
             style={{ maxHeight: "300px", overflowY: "auto", marginTop: "1.5rem" }}
             size="small"
-            header={<div>
-              <p>{`Lista de 2N° ganadores automáticos : ${listaDeBoletosConPremioRandom.length}`}</p>
-              <p>{`Total : ${listaDeBoletosConPremioRandom.reduce((a: any, cv: any) => {
-                return (a + cv.premio)
-              }, 0).toLocaleString()}`}</p>
-            </div>}
+            header={(
+              <div>
+                <p>{`Lista de ganadores QR automáticos: ${listaDeBoletosConPremioRandom.length}`}</p>
+                <p>{`Total : ${listaDeBoletosConPremioRandom.reduce((a: any, cv: any) => {
+                  return (a + cv.premio)
+                }, 0).toLocaleString()}`}</p>
+              </div>
+            )}
             bordered
             dataSource={listaDeBoletosConPremioRandom}
             renderItem={(item: any) => {

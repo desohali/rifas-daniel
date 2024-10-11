@@ -61,7 +61,7 @@ const FormBoleto: React.FC = () => {
 
   return (
     <Drawer
-      title="Premios 2N° ganadores"
+      title="Premios ganadores QR"
       width={500}
       onClose={() => {
         dispatch(setOpenFormBoleto(false));

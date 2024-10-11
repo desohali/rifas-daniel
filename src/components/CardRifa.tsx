@@ -362,12 +362,12 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
           }} shape="circle" icon={<CloudDownloadOutlined />} />
         </Tooltip>,
-        <Tooltip title="2N° ganadores">
+        <Tooltip title="Ganadores QR">
           <Button size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" onClick={async (e) => {
             e.stopPropagation();
             dispatch(setOpenFormBoleto(true));
             dispatch(setRifaDetalles(rifa));
-          }} shape="circle" icon={<EyeOutlined />} />
+          }} shape="circle" icon={<QrcodeOutlined />} />
         </Tooltip>,
         <Tooltip title="Eliminar">
           <Button loading={responseEliminar.isLoading} size={window?.innerWidth > 768 ? 'middle' : 'small'} type="primary" danger onClick={async (e) => {
@@ -431,6 +431,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       />
       <Meta description={`Fecha : ${rifa?.fecha}`} />
       <Meta description={`Nombre : ${rifa?.nombre}`} />
+      <Meta description={`Descripción: ${rifa?.descripcion}`} />
       <Meta description={`Total: ${((Number(rifa.precio) * 1000) * Number(rifa.count)).toLocaleString()}`} />
     </Card>
   )
