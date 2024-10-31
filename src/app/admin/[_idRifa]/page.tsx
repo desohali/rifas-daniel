@@ -442,7 +442,7 @@ const page = ({ params }: any) => {
         <Col className="gutter-row" xs={24} sm={24} md={24} lg={24}>
           <Alert style={{ marginBottom: "12px" }} message={
             <Marquee pauseOnHover gradient={false}>
-              <Title style={{ marginBottom: "6px" }} level={3}>Juego De Rifas - premio {esNumero(rifaDetalles?.premio) ? rifaDetalles?.premio?.toFixed(3) : rifaDetalles?.premio}</Title>
+              <Title style={{ marginBottom: "6px" }} level={3}>Juego De Rifas - premio {esNumero(rifaDetalles?.premio) ? Number(rifaDetalles?.premio)?.toFixed(3) : rifaDetalles?.premio}</Title>
             </Marquee>
           } type="info" showIcon />
         </Col>
