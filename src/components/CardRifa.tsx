@@ -303,7 +303,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.font = "bold 12px serif";
       ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
       ctx.font = "bold 18px serif";
-      ctx.fillText(esNumero(rifa?.premio) ? rifa?.premio?.toFixed(3) : rifa?.premio || "", 230, 72.5);
+      ctx.fillText(esNumero(rifa?.premio) ? Number(rifa?.premio)?.toFixed(3) : rifa?.premio || "", 230, 72.5);
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -427,7 +427,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
       </Row>
       <Meta
-        title={`Premio : ${esNumero(rifa?.premio) ? rifa?.premio?.toFixed(3) : rifa?.premio || ""}`}
+        title={`Premio : ${esNumero(rifa?.premio) ? Number(rifa?.premio)?.toFixed(3) : rifa?.premio || ""}`}
       />
       <Meta description={`Fecha : ${rifa?.fecha}`} />
       <Meta description={`Nombre : ${rifa?.nombre}`} />
