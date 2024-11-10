@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
-import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Row, Tag, Tooltip } from 'antd';
+import { EyeOutlined, EditOutlined, CloudDownloadOutlined, QrcodeOutlined, DeleteOutlined, AimOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Divider, Row, Tag, Tooltip, Typography } from 'antd';
 import { useRouter } from 'next/navigation';
 import { setImagenRifa, setIsRifa, setListaDeBoletos, setOpenFormBoleto, setOpenFormRifa, setRifaDetalles } from '@/features/adminSlice';
 import { useDispatch } from 'react-redux';
@@ -433,6 +433,11 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       <Meta description={`Nombre : ${rifa?.nombre}`} />
       <Meta description={`Descripción: ${rifa?.descripcion}`} />
       <Meta description={`Total: ${((Number(rifa.precio) * 1000) * Number(rifa.count)).toLocaleString()}`} />
+
+      <Divider style={{ marginTop: "1rem", marginBottom: "0.5rem" }} />
+      <Typography.Link href={`${location?.origin}/google/${rifa?._id}`} strong target="_blank">
+        <AimOutlined /> Google Map
+      </Typography.Link>
     </Card>
   )
 };
