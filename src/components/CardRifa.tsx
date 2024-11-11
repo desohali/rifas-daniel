@@ -88,7 +88,7 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
   ctx.font = "bold 12px serif";
   ctx.fillText(formatearFecha(findRifa.fecha)?.toUpperCase(), 55, 29.5);
   ctx.font = "bold 18px serif";
-  ctx.fillText(esNumero(findRifa?.premio) ? findRifa?.premio?.toFixed(3) : findRifa?.premio || "", 230, 72.5);
+  ctx.fillText(esNumero(findRifa?.premio) ? findRifa?.premio : findRifa?.premio || "", 230, 72.5);
 
   // dibujasmos la imagen
   ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -106,7 +106,7 @@ const crearBoleto = async (element: any, canvas: any, ctx: any, findRifa: any) =
   ctx.fillStyle = findRifa.color;//"black";
   ctx.font = "bold 18px serif";
   ctx.fillStyle = "grey";
-  ctx.fillText(`₲: ${findRifa?.precio?.toFixed(3)}`, 120, 180);
+  ctx.fillText(`₲: ${findRifa?.precio}`, 120, 180);
 
   ctx.drawImage(img, 210, 80, 100, 100);
 
@@ -206,7 +206,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.font = "bold 12px serif";
       ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
       ctx.font = "bold 18px serif";
-      ctx.fillText(esNumero(rifa.premio) ? rifa?.premio?.toFixed(3) : rifa?.premio || "", 230, 72.5);
+      ctx.fillText(esNumero(rifa.premio) ? rifa?.premio : rifa?.premio || "", 230, 72.5);
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -303,7 +303,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       ctx.font = "bold 12px serif";
       ctx.fillText(formatearFecha(rifa.fecha)?.toUpperCase(), 55, 29.5);
       ctx.font = "bold 18px serif";
-      ctx.fillText(esNumero(rifa?.premio) ? Number(rifa?.premio)?.toFixed(3) : rifa?.premio || "", 230, 72.5);
+      ctx.fillText(esNumero(rifa?.premio) ? Number(rifa?.premio) : rifa?.premio || "", 230, 72.5);
 
       // dibujasmos la imagen
       ctx.drawImage(imagen, 25, 100, 80, 80);
@@ -427,7 +427,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
 
       </Row>
       <Meta
-        title={`Premio : ${esNumero(rifa?.premio) ? Number(rifa?.premio)?.toFixed(3) : rifa?.premio || ""}`}
+        title={`Premio : ${esNumero(rifa?.premio) ? Number(rifa?.premio) : rifa?.premio || ""}`}
       />
       <Meta description={`Fecha : ${rifa?.fecha}`} />
       <Meta description={`Nombre : ${rifa?.nombre}`} />

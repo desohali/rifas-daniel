@@ -122,7 +122,7 @@ const BoletosDEvueltos = () => {
             dataSource={listaDeBoletosADevolver}
             renderItem={(item: any) => (
               <List.Item key={item._id}>
-                {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item?.premio?.toFixed(3)} `}
+                {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item?.premio} `}
                 {(item.estadoMenor && item.estado) ? <CheckCircleOutlined style={{ color: "green" }} /> : <WarningOutlined style={{ color: "red" }} />}
               </List.Item>
             )}

@@ -186,7 +186,7 @@ const FormBoletosAutomaticos = () => {
             renderItem={(item: any) => {
               return (
                 <List.Item key={item?._id}>
-                  {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio == 9 ? "Sorpresa" : item.premio?.toFixed(3)}`}
+                  {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio == 9 ? "Sorpresa" : item.premio}`}
                 </List.Item>
               )
             }}

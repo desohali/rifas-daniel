@@ -252,7 +252,7 @@ const App: React.FC<{ params: any }> = ({ params }: any) => {
           ctx.fillStyle = "white";
           if (boletoDetalles.premio) {
             ctx.fillText("Este boleto ya fue jugado", 125, 940);
-            ctx.fillText(`tiene un premio de ${boletoDetalles.premio.toFixed(3)}`, 125, 980);
+            ctx.fillText(`tiene un premio de ${boletoDetalles.premio}`, 125, 980);
           } else {
             ctx.fillText("Este boleto ya fue jugado", 125, 940);
             ctx.fillText(`no tiene premio`, 200, 980);

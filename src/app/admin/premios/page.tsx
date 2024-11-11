@@ -178,7 +178,7 @@ const Premios = () => {
                 closable
                 style={{ marginBottom: ".5rem" }}
                 message={`Boleto : ${data?.premioMenor}`}
-                description={Boolean(data?.premio) ? `Premio de ${data?.premio?.toFixed(3)} pendiente de pago!` : "Este boleto no tuvo premio."}
+                description={Boolean(data?.premio) ? `Premio de ${data?.premio} pendiente de pago!` : "Este boleto no tuvo premio."}
                 type={Boolean(data?.premio) ? "success" : "warning"}
                 showIcon
               />
@@ -233,7 +233,7 @@ const Premios = () => {
             dataSource={listaDeBoletos || []}
             renderItem={(item: any) => (
               <List.Item key={item._id}>
-                {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item?.premio?.toFixed(3)}`}
+                {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item?.premio}`}
               </List.Item>
             )}
           />
