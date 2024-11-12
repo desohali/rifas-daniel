@@ -165,8 +165,13 @@ const Premios = () => {
                 closable
                 style={{ marginBottom: ".5rem" }}
                 message={`Boleto : ${data?.premioMenor}`}
-                description="Ya ha sido pagado!"
-                type="warning"
+                description={(
+                  <>
+                    <p><Text strong >Ya ha sido pagado!</Text></p>
+                    <p><Text strong >Premio: {data?.premio?.toLocaleString('en-US')?.replace(/,/g, '.')} Mil</Text></p>
+                  </>
+                )}
+                type="error"
                 showIcon
               />
             </>
@@ -178,7 +183,7 @@ const Premios = () => {
                 closable
                 style={{ marginBottom: ".5rem" }}
                 message={`Boleto : ${data?.premioMenor}`}
-                description={Boolean(data?.premio) ? `Premio de ${data?.premio} pendiente de pago!` : "Este boleto no tuvo premio."}
+                description={Boolean(data?.premio) ? `Premio de ${data?.premio?.toLocaleString('en-US')?.replace(/,/g, '.')} Mil, pendiente de pago!` : "Este boleto no tuvo premio."}
                 type={Boolean(data?.premio) ? "success" : "warning"}
                 showIcon
               />
@@ -233,7 +238,7 @@ const Premios = () => {
             dataSource={listaDeBoletos || []}
             renderItem={(item: any) => (
               <List.Item key={item._id}>
-                {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item?.premio}`}
+                {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item?.premio?.toLocaleString('en-US')?.replace(/,/g, '.')} Mil`}
               </List.Item>
             )}
           />

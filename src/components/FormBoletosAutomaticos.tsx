@@ -178,7 +178,7 @@ const FormBoletosAutomaticos = () => {
                 <p>{`Lista de ganadores QR automáticos: ${listaDeBoletosConPremioRandom.length}`}</p>
                 <p>{`Total : ${listaDeBoletosConPremioRandom.reduce((a: any, cv: any) => {
                   return (a + cv.premio)
-                }, 0).toLocaleString()}`}</p>
+                }, 0)?.toLocaleString('en-US')?.replace(/,/g, '.')}`}</p>
               </div>
             )}
             bordered
@@ -186,7 +186,7 @@ const FormBoletosAutomaticos = () => {
             renderItem={(item: any) => {
               return (
                 <List.Item key={item?._id}>
-                  {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio == 9 ? "Sorpresa" : item.premio}`}
+                  {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio?.toLocaleString('en-US')?.replace(/,/g, '.')} Mil`}
                 </List.Item>
               )
             }}

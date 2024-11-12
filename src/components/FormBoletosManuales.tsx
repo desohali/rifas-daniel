@@ -180,7 +180,7 @@ const FormBoletosManuales: React.FC = () => {
             <p>{`Lista de ganadores QR manuales : ${listaDeBoletosConPremio.length}`}</p>
             <p>{`Total : ${listaDeBoletosConPremio.reduce((a: any, cv: any) => {
               return (a + cv.premio)
-            }, 0).toLocaleString()}`}
+            }, 0)?.toLocaleString('en-US')?.replace(/,/g, '.')}`}
             </p>
           </div>
         )}
@@ -201,7 +201,7 @@ const FormBoletosManuales: React.FC = () => {
                 }} shape="circle" icon={<DeleteOutlined />} />
               </Tooltip>
             ]}>
-              {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio == 9 ? "Sorpresa" : item.premio}`}
+              {`Boleto: ${item.premioMayor} - ${item.premioMenor} Premio: ${item.premio?.toLocaleString('en-US')?.replace(/,/g, '.')} Mil`}
             </List.Item>
           )
         }}

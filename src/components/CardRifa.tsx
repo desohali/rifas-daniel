@@ -432,7 +432,7 @@ const CardRifa: React.FC<{ rifa: any, formRifa: any }> = ({ rifa, formRifa }: an
       <Meta description={`Fecha : ${rifa?.fecha}`} />
       <Meta description={`Nombre : ${rifa?.nombre}`} />
       <Meta description={`Descripción: ${rifa?.descripcion}`} />
-      <Meta description={`Total: ${((Number(rifa.precio) * 1000) * Number(rifa.count)).toLocaleString()}`} />
+      <Meta description={`Total: ${((Number(rifa.precio) * 1000) * Number(rifa.count))?.toLocaleString('en-US')?.replace(/,/g, '.')}`} />
 
       <Divider style={{ marginTop: "1rem", marginBottom: "0.5rem" }} />
       <Typography.Link href={`${location?.origin}/google/${rifa?._id}`} strong target="_blank">

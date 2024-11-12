@@ -103,9 +103,9 @@ const page = ({ params }: any) => {
               <p>{rifa?.fecha}</p>
               <p>{rifa?.fecha ? formatearFecha(rifa?.fecha || "") : rifa?.fecha}</p>
               <p>Cantidas de boletos vendidos {boletos.length}</p>
-              <p>Total de boletos vendidos {(boletos.length * (rifa?.precio * 1000))?.toLocaleString('en-US')}</p>
+              <p>Total de boletos vendidos {(boletos.length * (rifa?.precio * 1000))?.toLocaleString('en-US')?.replace(/,/g, '.')}</p>
               <p>Cantidad de premios {(data || []).filter((boleto: any) => (boleto?.premio))?.length}</p>
-              <p>Total de premios {boletos.reduce((a: any, cv: any) => (a + cv?.premio), 0)?.toLocaleString('en-US')}</p>
+              <p>Total de premios {boletos.reduce((a: any, cv: any) => (a + cv?.premio), 0)?.toLocaleString('en-US')?.replace(/,/g, '.')}</p>
               <p>Cantidad de vendedores {(rifa?.vendedores || []).length}</p>
             </div>
           )}
