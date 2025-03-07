@@ -38,7 +38,7 @@ function formatearFecha(fechaStr: string) {
   return formateador.format(fecha);
 }
 
-const imageUrl = "https://yocreoquesipuedohacerlo.com/assets/images/juegoDeRifas/";
+const imageUrl = "https://rifas.desohali.com/assets/images/juegoDeRifas/";
 
 var pdfDoc: any;
 var imagen: any;

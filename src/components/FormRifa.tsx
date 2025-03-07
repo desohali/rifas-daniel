@@ -47,7 +47,7 @@ const uploadImageRifa = async (imagenFile: string, idRifa: string) => {
   formData.append("imagen", imagenFile);
   formData.append("idRifa", idRifa);
 
-  const response = await fetch(`https://yocreoquesipuedohacerlo.com/juegoDeRifas/uploadImageRifa`, {
+  const response = await fetch(`https://rifas.desohali.com/juegoDeRifas/uploadImageRifa`, {
     method: "post",
     body: formData
   });

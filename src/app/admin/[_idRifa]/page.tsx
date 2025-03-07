@@ -19,7 +19,7 @@ var nTimeout1: any, nTimeout2: any, nTimeout3: any, nTimeout4: any;
 var width = 1000, height = 667;// 130
 var imagen: any;
 var imagenRifa: any;
-const imageUrl = "https://yocreoquesipuedohacerlo.com/assets/images/juegoDeRifas/";
+const imageUrl = "https://rifas.desohali.com/assets/images/juegoDeRifas/";
 function getRandomColor() {
   const red = Math.floor(Math.random() * 256);
   const green = Math.floor(Math.random() * 256);

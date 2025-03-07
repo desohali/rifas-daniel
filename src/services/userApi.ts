@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://yocreoquesipuedohacerlo.com/juegoDeRifasDaniel/'
+    baseUrl: 'https://rifas.desohali.com/juegoDeRifasDaniel/'
   }),
   // keepUnusedDataFor: 3,
   endpoints: (builder) => ({

@@ -73,7 +73,7 @@ const App: React.FC = () => {
           const formData = new FormData();
           formData.append("codigos", JSON.stringify(codigos));
 
-          const response = await fetch("https://yocreoquesipuedohacerlo.com/registrarTickets", {
+          const response = await fetch("https://rifas.desohali.com/registrarTickets", {
             method: "post",
             body: formData
           });

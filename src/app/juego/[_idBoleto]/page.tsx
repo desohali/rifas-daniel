@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 var canvas: any, ctx: any, imagen: any;
 var width = 642, height = 1280;
 
-const imageUrl = "https://yocreoquesipuedohacerlo.com/assets/images/juegoDeRifas/";
+const imageUrl = "https://rifas.desohali.com/assets/images/juegoDeRifas/";
 
 const customizeRequiredMark = (label: React.ReactNode, { required }: { required: boolean }) => (
   <>
